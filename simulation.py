@@ -1,4 +1,3 @@
-#Mathematical Modelling and Simulation to find the optimal MRP panel size for Vancouver Coastal Health.
 import numpy as np
 
 def simulate_appointments_equal_lambda(lambda_, patients=1000, slots_per_week=6, weeks_limit=1000):
