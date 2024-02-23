@@ -1,6 +1,6 @@
 import numpy as np
 
-def simulate_appointments_equal_lambda(lambda_, patients=1000, slots_per_week=6, weeks_limit=1000):
+def simulate_appointments_equal_lambda(lambda_, patients=1000, slots_per_week=12, weeks_limit=1000):
     # Print initial setup details
     print(f"Using a uniform lambda of {lambda_} for all patients.")
 
