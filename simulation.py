@@ -1,46 +1,52 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 def simulate_appointments_equal_lambda(lambda_, patients=1000, slots_per_week=12, weeks_limit=1000):
-    # Print initial setup details
+    # Using a uniform lambda for all patients.
     print(f"Using a uniform lambda of {lambda_} for all patients.")
 
-    # Initialize a list to track whether each patient has booked an appointment
+    # Initialize tracking variables
     appointment_booked = [False] * patients
-    
-    # Initialize the total number of appointments booked
     total_appointments_booked = 0
-
-    # Initialize a counter for the number of weeks
     week = 0
+    weekly_bookings = []
 
-    # Continue simulation until all patients have booked or reached the week limit
+    # Simulation loop
     while not all(appointment_booked) and week < weeks_limit:
         week += 1
-        
-        # The expected number of requests is the product of lambda and the patient count
         expected_requests = lambda_ * patients
-        
-        # Calculate the actual number of requests based on the Poisson distribution
         actual_requests = np.random.poisson(expected_requests)
-        
-        # Determine the number of appointments that can be booked, capped by the slots available
         appointments_this_week = min(actual_requests, slots_per_week)
         
-        # Update the appointments booked
+        # Book appointments for this week
+        bookings_count = 0
         for _ in range(appointments_this_week):
             for i in range(patients):
                 if not appointment_booked[i]:
                     appointment_booked[i] = True
                     total_appointments_booked += 1
+                    bookings_count += 1
                     break
 
-        # Check if all appointments have been booked
+        weekly_bookings.append(bookings_count)
+
         if all(appointment_booked):
             print(f"All patients have booked an appointment by week {week}.")
             break
     else:
         print(f"Not all patients could book an appointment within {weeks_limit} weeks.")
-        
+
+    return week, weekly_bookings
+
 # Example usage
 lambda_ = 0.25  # Adjust lambda as needed
-simulate_appointments_equal_lambda(lambda_)
+week, weekly_bookings = simulate_appointments_equal_lambda(lambda_)
+
+# Plotting the result
+plt.figure(figsize=(10, 6))
+plt.plot(range(1, week + 1), weekly_bookings, marker='o', linestyle='-', color='b')
+plt.title('Weekly Bookings Over Time')
+plt.xlabel('Week')
+plt.ylabel('Number of Bookings')
+plt.grid(True)
+plt.show()
