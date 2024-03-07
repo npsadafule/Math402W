@@ -10,9 +10,9 @@ client = MongoClient(uri, server_api=ServerApi('1'))
 db = client["healthcare"]  # Use your database name
 patients_col = db["patients"]  # Use your collection name
 
-# Generate 1000 patients with random lambda values between 0.25 and 0.5
+# Generate 1000 patients with random lambda values between 0.25 and 2
 patients = [
-    {"patient_id": i, "lambda": np.random.uniform(0.25, 0.5)}
+    {"patient_id": i, "lambda": np.random.uniform(0.25, 2)}
     for i in range(1000)
 ]
 
