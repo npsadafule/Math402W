@@ -12,16 +12,16 @@ client = MongoClient(uri, server_api=ServerApi('1'))
 
 # Database and Collection
 db = client["healthcare"]
-patients_col = db["patients"]
+patients_col = db["patient_lambdas"]
 
 # Fetch lambda values for all patients
-patients_lambdas = list(patients_col.find({}, {"_id": 0, "lambda": 1}))
+patients_lambdas = list(patients_col.find({}, {"_id": 0, "Lambda": 1}))
 
 # Close the database connection
 client.close()
 
 # Convert lambda values to a list of floats
-lambdas = [patient["lambda"] for patient in patients_lambdas]
+lambdas = [patient["Lambda"] for patient in patients_lambdas]
 
 # Define the simulation parameters
 hours_per_week = 6 * 2  # MRP's availability: 6 hours/day, 2 days/week
