@@ -1,80 +1,52 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from pymongo import MongoClient
-from pymongo.server_api import ServerApi
 
-# Desired wait time input from the user
-desired_wait_time = float(input("Enter the desired average wait time (in weeks): "))
+def simulate_appointments_equal_lambda(lambda_, patients=1000, slots_per_week=12, weeks_limit=1000):
+    # Using a uniform lambda for all patients.
+    print(f"Using a uniform lambda of {lambda_} for all patients.")
 
-# MongoDB connection details
-uri = 'mongodb+srv://USERNAME:PASSWORD@cluster0.lxrcibg.mongodb.net/'
-client = MongoClient(uri, server_api=ServerApi('1'))
+    # Initialize tracking variables
+    appointment_booked = [False] * patients
+    total_appointments_booked = 0
+    week = 0
+    weekly_bookings = []
 
-# Database and Collection
-db = client["healthcare"]
-patients_col = db["patient_lambdas"]
+    # Simulation loop
+    while not all(appointment_booked) and week < weeks_limit:
+        week += 1
+        expected_requests = lambda_ * patients
+        actual_requests = np.random.poisson(expected_requests)
+        appointments_this_week = min(actual_requests, slots_per_week)
+        
+        # Book appointments for this week
+        bookings_count = 0
+        for _ in range(appointments_this_week):
+            for i in range(patients):
+                if not appointment_booked[i]:
+                    appointment_booked[i] = True
+                    total_appointments_booked += 1
+                    bookings_count += 1
+                    break
 
-# Fetch lambda values for all patients
-patients_lambdas = list(patients_col.find({}, {"_id": 0, "Lambda": 1}))
+        weekly_bookings.append(bookings_count)
 
-# Close the database connection
-client.close()
-
-# Convert lambda values to a list of floats
-lambdas = [patient["Lambda"] for patient in patients_lambdas]
-
-# Define the simulation parameters
-hours_per_week = 6 * 2  # MRP's availability: 6 hours/day, 2 days/week
-slots_per_week = hours_per_week * 2  # 30 mins per appointment
-weeks = 4  # Simulate over 4 weeks (1 month)
-total_slots = slots_per_week * weeks
-
-# Adjusted simulation function to calculate wait times
-def simulate_panel_size(panel_size, lambdas, total_slots):
-    total_requested_appointments = 0
-    for lam in lambdas[:panel_size]:
-        patient_appointments = np.sum(np.random.poisson(lam, weeks))
-        total_requested_appointments += patient_appointments
-    
-    overflow = total_requested_appointments - total_slots
-    if overflow > 0:
-        wait_time = overflow / panel_size
+        if all(appointment_booked):
+            print(f"All patients have booked an appointment by week {week}.")
+            break
     else:
-        wait_time = 0
-    return wait_time
+        print(f"Not all patients could book an appointment within {weeks_limit} weeks.")
 
-# Find optimal panel size
-panel_sizes = []
-average_wait_times = []
-optimal_panel_size = None
+    return week, weekly_bookings
 
-for size in range(len(lambdas), 0, -1):
-    wait_time = simulate_panel_size(size, lambdas, total_slots)
-    panel_sizes.append(size)
-    average_wait_times.append(wait_time)
-    if wait_time <= desired_wait_time and optimal_panel_size is None:
-        optimal_panel_size = size
+# Example usage
+lambda_ = 0.25  # Adjust lambda as needed
+week, weekly_bookings = simulate_appointments_equal_lambda(lambda_)
 
-# Reverse lists to plot them from smaller to larger panel sizes
-panel_sizes.reverse()
-average_wait_times.reverse()
-
-# Plotting
+# Plotting the result
 plt.figure(figsize=(10, 6))
-plt.plot(panel_sizes, average_wait_times, marker='o', linestyle='-', color='blue')
-plt.axhline(y=desired_wait_time, color='r', linestyle='--', label=f'Desired Wait Time = {desired_wait_time} weeks')
-if optimal_panel_size is not None:
-    plt.axvline(x=optimal_panel_size, color='g', linestyle='--', label=f'Optimal Panel Size = {optimal_panel_size}')
-plt.title('Panel Size vs. Average Wait Time')
-plt.xlabel('Panel Size')
-plt.ylabel('Average Wait Time (weeks)')
-plt.legend()
+plt.plot(range(1, week + 1), weekly_bookings, marker='o', linestyle='-', color='b')
+plt.title('Weekly Bookings Over Time')
+plt.xlabel('Week')
+plt.ylabel('Number of Bookings')
 plt.grid(True)
-plt.tight_layout()
 plt.show()
-
-# Output the optimal panel size
-if optimal_panel_size is not None:
-    print(f"The optimal panel size to achieve a desired wait time of {desired_wait_time} weeks or less is: {optimal_panel_size}")
-else:
-    print("No panel size can achieve the desired wait time.")
