@@ -49,7 +49,7 @@ slots_per_week = hours_per_week * 2
 weeks = 16
 total_slots = slots_per_week * weeks
 
-num_runs = 10  # Define the number of simulation runs
+num_runs = 100  # Define the number of simulation runs
 optimal_panel_sizes = []
 
 for run in range(num_runs):
@@ -57,13 +57,14 @@ for run in range(num_runs):
     optimal_panel_sizes.append(optimal_size)
     print(f"Run {run+1}: Optimal Panel Size = {optimal_size}")
 
-# Plot the optimal panel sizes from each simulation run
+# Plot the optimal panel size for each simulation run
 plt.figure(figsize=(10, 6))
-plt.hist(optimal_panel_sizes, bins=range(min(optimal_panel_sizes), max(optimal_panel_sizes) + 1, 1), alpha=0.7, edgecolor='black')
-plt.title('Distribution of Optimal Panel Sizes Across Simulation Runs')
-plt.xlabel('Optimal Panel Size')
-plt.ylabel('Frequency')
-plt.grid(axis='y', alpha=0.75)
+plt.plot(range(1, num_runs + 1), optimal_panel_sizes, marker='o', linestyle='-', color='b')
+plt.title('Optimal Panel Size for Each Simulation Run')
+plt.xlabel('Simulation Run Number')
+plt.ylabel('Optimal Panel Size')
+plt.grid(True)
+plt.xticks(range(1, num_runs + 1))
 plt.show()
 
 # Calculate and display the mean and median of the optimal panel sizes
