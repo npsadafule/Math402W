@@ -8,12 +8,7 @@ df = pd.read_excel(excel_file_path, usecols=['PID', 'is_visit', 'ApptTypeDesc'])
 
 # Define a list of ApptTypeDesc to exclude from the show rate calculation
 excluded_appt_types = [
-    "Phone call FROM CLIENT to clinician", "Team 1 Walk-In", "Team 1 and Team 2 Walk In",
-    "Do Not Book", "Routine Visit", "Team 1 Booked", "Team 2 Walk-In", "Hep C Visit",
-    "Intake", "Admin Note", "Outreach Visit", "Team 1 and Team 2 Booked", "Psychiatrist",
-    "Care Coordination", "Walk In", "Phone Call", "Team 1 Phone call FROM CLIENT to clinician",
-    "Methadone/SUBOXONE", "Methadone Assessment", "Team 2 Phone call FROM CLIENT to clinician",
-    "Addiction Services", "Urgent (Same Day Visit)", "Ambulatory Care"
+    "Team 2 Booked", "Case Management", "Phone call from clinician  to client", "Team 1 and Team 2 Booked", "Video", "Team 2 Phone call from clinician to client", "Tobacco Dependency Clinic", "Clinical Chart Time", "Team 1 Phone call from clinician to client", "Virtual Care", "Follow-up", "Home Visit", "External Activity", "myoActivation", "Program Screening", "Team 2 Outreach Visit", "Pap Testing", "Counselling", "iOAT visit", "Team 1 Care Coordination", "Care Coordination", "Video Conferencing", "Interdisciplinary Consult", "Internal Medicine", "OAT Visit - In Office", "Break", "OAT Visit - Outreach", "Letter", "Team 2 Care Coordination", "Specialist", "Social Worker", "OAT Visit - Phone", "Team 1 Outreach Visit", "Bridging Only", "Specimen Collection", "Trans Clinic", "Mental Health Note", "Fibroscan", "Group Visit", "IUC Insertion",
 ]
 
 # Filter out appointments based on ApptTypeDesc
@@ -30,7 +25,7 @@ client = MongoClient(uri, server_api=ServerApi('1'))
 
 # Specify the database and collection
 db = client['healthcare']
-patients_col = db['patients']
+patients_col = db['patients(walk-in)']
 
 # Update the database with the show rates and remove NoShowRate
 for index, row in df_show_rate.iterrows():

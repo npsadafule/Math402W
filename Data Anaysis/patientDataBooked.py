@@ -14,11 +14,11 @@ df_lambda['ApptBookedDate'] = pd.to_datetime(df_lambda['ApptBookedDate'])
 # List of appointment types to be excluded
 exclude_appt_types = [
     "Phone call FROM CLIENT to clinician", "Team 1 Walk-In", "Team 1 and Team 2 Walk In",
-    "Do Not Book", "Routine Visit", "Team 1 Booked", "Team 2 Walk-In", "Hep C Visit",
-    "Intake", "Admin Note", "Outreach Visit", "Team 1 and Team 2 Booked", "Psychiatrist",
-    "Care Coordination", "Walk In", "Phone Call", "Team 1 Phone call FROM CLIENT to clinician",
+    "Do Not Book", "Routine Visit", "Team 2 Walk-In", "Hep C Visit",
+    "Intake", "Admin Note", "Outreach Visit", "Psychiatrist",
+    "Walk In", "Phone Call", "Team 1 Phone call FROM CLIENT to clinician",
     "Methadone/SUBOXONE", "Methadone Assessment", "Team 2 Phone call FROM CLIENT to clinician",
-    "Addiction Services", "Urgent (Same Day Visit)", "Ambulatory Care"
+    "Addiction Services", "Urgent (Same Day Visit)", "Ambulatory Care", "Pharmacy", "Nursing", "New Assessment",
 ]
 
 # Filter out the excluded appointment types
@@ -44,7 +44,7 @@ client = MongoClient(uri, server_api=ServerApi('1'))
 
 # Specify the database and collection
 db = client['healthcare']
-patients_col = db['patients']
+patients_col = db['patients(booked)']
 
 # Update lambda values in the database
 for patient in lambdas.to_dict('records'):
