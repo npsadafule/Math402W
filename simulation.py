@@ -24,7 +24,7 @@ client.close()
 lambdas = [patient["Lambda"] for patient in patients_data]
 
 # Assuming a default ShowRate of 1 for patients without a ShowRate value
-show_rates = [patient.get("ShowRate", 1) for patient in patients_data]
+show_rates = [patient.get("ShowRate", 0) for patient in patients_data]
 
 
 # Define the simulation parameters
@@ -65,7 +65,7 @@ panel_sizes.reverse()
 average_wait_times.reverse()
 
 # Plotting
-plt.figure(figsize=(10, 6))
+plt.figure(figsize=(16, 9))
 plt.plot(panel_sizes, average_wait_times, marker='o', linestyle='-', color='blue')
 plt.axhline(y=desired_wait_time, color='r', linestyle='--', label=f'Desired Wait Time = {desired_wait_time} weeks')
 if optimal_panel_size is not None:

@@ -5,7 +5,6 @@ from datetime import datetime
 
 # Load the lambda data from Excel
 lambda_excel_file_path = 'Appointments.xlsx'  # Update this path as necessary
-# Include 'ApptTypeDesc' in the columns to be read
 df_lambda = pd.read_excel(lambda_excel_file_path, usecols=['PID', 'ApptBookedDate', 'ApptTypeDesc'])
 
 # Convert dates to datetime objects for lambda data
@@ -33,10 +32,13 @@ total_months = (end_date.year - start_date.year) * 12 + end_date.month - start_d
 lambdas = df_lambda_filtered.groupby('PID').size() / total_months
 lambdas = lambdas.reset_index(name='Lambda')
 
-# The CSI calculations remain the same, load CSI data and calculate average
+# Load CSI data and calculate average, ensuring it's only for relevant PIDs
 csi_excel_file_path = 'CSI data.xlsx'  # Update this path as necessary
 df_csi = pd.read_excel(csi_excel_file_path, usecols=['PID', 'CSI_Score_0.1'])
-avg_csi_scores = df_csi.groupby('PID')['CSI_Score_0.1'].mean().reset_index(name='CSI')
+
+# Filter CSI data to include only PIDs present in df_lambda_filtered
+df_csi_filtered = df_csi[df_csi['PID'].isin(df_lambda_filtered['PID'].unique())]
+avg_csi_scores = df_csi_filtered.groupby('PID')['CSI_Score_0.1'].mean().reset_index(name='CSI')
 
 # MongoDB connection details - replace USERNAME and PASSWORD
 uri = "mongodb+srv://USERNAME:PASSWORD@cluster0.lxrcibg.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
@@ -46,7 +48,7 @@ client = MongoClient(uri, server_api=ServerApi('1'))
 db = client['healthcare']
 patients_col = db['patients(booked)']
 
-# Update lambda values in the database
+# Update lambda values in the database for relevant PIDs only
 for patient in lambdas.to_dict('records'):
     patients_col.update_one(
         {'PID': patient['PID']},
@@ -54,7 +56,7 @@ for patient in lambdas.to_dict('records'):
         upsert=True
     )
 
-# Update the database with average CSI scores
+# Update the database with average CSI scores for relevant PIDs only
 for patient in avg_csi_scores.to_dict('records'):
     patients_col.update_one(
         {'PID': patient['PID']},
@@ -63,5 +65,4 @@ for patient in avg_csi_scores.to_dict('records'):
     )
 
 client.close()
-
 print("Database has been updated with Lambda and CSI values.")
