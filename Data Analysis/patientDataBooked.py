@@ -13,11 +13,10 @@ df_lambda['ApptBookedDate'] = pd.to_datetime(df_lambda['ApptBookedDate'])
 # List of appointment types to be excluded
 exclude_appt_types = [
     "Phone call FROM CLIENT to clinician", "Team 1 Walk-In", "Team 1 and Team 2 Walk In",
-    "Do Not Book", "Routine Visit", "Team 2 Walk-In", "Hep C Visit",
-    "Intake", "Admin Note", "Outreach Visit", "Psychiatrist",
-    "Walk In", "Phone Call", "Team 1 Phone call FROM CLIENT to clinician",
-    "Methadone/SUBOXONE", "Methadone Assessment", "Team 2 Phone call FROM CLIENT to clinician",
-    "Addiction Services", "Urgent (Same Day Visit)", "Ambulatory Care", "Pharmacy", "Nursing", "New Assessment",
+    "Do Not Book", "Routine Visit", "Team 2 Walk-In", 
+     "Admin Note", "Walk In", "Phone Call", "Team 1 Phone call FROM CLIENT to clinician",
+     "Team 2 Phone call FROM CLIENT to clinician", "iOAT visit",
+     "Ambulatory Care",  "Addiction Services", "Pharmacy", "Nursing", "Psychiatrist", "Tobacco Dependency Clinic", "Fibroscan", "Specimen Collection", "Social Worker", "Fibroscan",
 ]
 
 # Filter out the excluded appointment types

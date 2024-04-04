@@ -9,11 +9,10 @@ df = pd.read_excel(excel_file_path, usecols=['PID', 'is_visit', 'ApptTypeDesc'])
 # Define a list of ApptTypeDesc to exclude from the show rate calculation
 excluded_appt_types = [
     "Phone call FROM CLIENT to clinician", "Team 1 Walk-In", "Team 1 and Team 2 Walk In",
-    "Do Not Book", "Routine Visit", "Team 2 Walk-In", "Hep C Visit",
-    "Intake", "Admin Note", "Outreach Visit", "Psychiatrist",
-    "Walk In", "Phone Call", "Team 1 Phone call FROM CLIENT to clinician",
-    "Methadone/SUBOXONE", "Methadone Assessment", "Team 2 Phone call FROM CLIENT to clinician",
-    "Addiction Services", "Urgent (Same Day Visit)", "Ambulatory Care", "Pharmacy", "Nursing", "New Assessment",
+    "Do Not Book", "Routine Visit", "Team 2 Walk-In", 
+    "Admin Note", "Walk In", "Phone Call", "Team 1 Phone call FROM CLIENT to clinician",
+    "Team 2 Phone call FROM CLIENT to clinician", "iOAT visit",
+    "Ambulatory Care",  "Addiction Services", "Pharmacy", "Nursing", "Psychiatrist", "Tobacco Dependency Clinic", "Fibroscan", "Specimen Collection", "Social Worker", "Fibroscan",
 ]
 
 # Filter out appointments based on ApptTypeDesc

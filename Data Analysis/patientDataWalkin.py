@@ -15,11 +15,11 @@ exclude_appt_types = [
     "Team 2 Booked", "Case Management", "Phone call from clinician to client", "Team 1 and Team 2 Booked", "Video", 
     "Team 2 Phone call from clinician to client", "Tobacco Dependency Clinic", "Clinical Chart Time", 
     "Team 1 Phone call from clinician to client", "Virtual Care", "Follow-up", "Home Visit", "External Activity", 
-    "myoActivation", "Program Screening", "Team 2 Outreach Visit", "Pap Testing", "Counselling", "iOAT visit", 
+    "myoActivation", "Program Screening", "Team 2 Outreach Visit", "Pap Testing", "Counselling",  
     "Team 1 Care Coordination", "Care Coordination", "Video Conferencing", "Interdisciplinary Consult", 
     "Internal Medicine", "OAT Visit - In Office", "Break", "OAT Visit - Outreach", "Letter", "Team 2 Care Coordination", 
-    "Specialist", "Social Worker", "OAT Visit - Phone", "Team 1 Outreach Visit", "Bridging Only", "Specimen Collection", 
-    "Trans Clinic", "Mental Health Note", "Fibroscan", "Group Visit", "IUC Insertion",
+    "Specialist", "OAT Visit - Phone", "Team 1 Outreach Visit", "Bridging Only", "Specimen Collection", 
+    "Trans Clinic", "Mental Health Note", "Fibroscan", "Group Visit", "IUC Insertion", "Outreach Visit", "Psychiatrist", "Hep C Visit", "Intake", "Methadone/SUBOXONE", "Methadone Assessment", "Urgent (Same Day Visit)", "New Assessment",  "Addiction Services", "Pharmacy", "Social Worker",
 ]
 
 # Filter out the excluded appointment types

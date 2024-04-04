@@ -7,7 +7,7 @@ from pymongo.server_api import ServerApi
 desired_wait_time = float(input("Enter the desired average wait time (in weeks): "))
 
 # MongoDB connection details
-uri = 'mongodb+srv://USERNAME:PASSWORD@cluster0.lxrcibg.mongodb.net/'
+uri = 'mongodb+srv://npsadafule:zbbc4445@cluster0.lxrcibg.mongodb.net/'
 client = MongoClient(uri, server_api=ServerApi('1'))
 
 # Database and Collection
@@ -23,14 +23,14 @@ client.close()
 # Process fetched data
 lambdas = [patient["Lambda"] for patient in patients_data]
 
-# Assuming a default ShowRate of 1 for patients without a ShowRate value
+# Assuming a default ShowRate of 0 for patients without a ShowRate value
 show_rates = [patient.get("ShowRate", 0) for patient in patients_data]
 
 
 # Define the simulation parameters
 hours_per_week = 6 * 2  # MRP's availability: 6 hours/day, 2 days/week
 slots_per_week = hours_per_week * 2  # 30 mins per appointment
-weeks = 16  # Simulate over 16 weeks (4 months)
+weeks = 52  # Simulate over 16 weeks (4 months)
 total_slots = slots_per_week * weeks
 
 # Adjusted simulation function to calculate wait times including ShowRate
