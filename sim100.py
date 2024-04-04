@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
+from credentials import USERNAME, PASSWORD
 
 def simulate_panel_size(panel_size, lambdas, show_rates, total_slots, weeks):
     total_requested_appointments = 0
@@ -15,7 +16,7 @@ def simulate_panel_size(panel_size, lambdas, show_rates, total_slots, weeks):
     overflow = total_requested_appointments - total_slots
     return overflow / panel_size if overflow > 0 else 0
 
-def run_simulation(desired_wait_time, lambdas, show_rates, total_slots, weeks, extra_patients=100):
+def run_simulation(desired_wait_time, lambdas, show_rates, total_slots, weeks, extra_patients=50):
     optimal_panel_size = None
     # Extend simulation to include extra 100 patients beyond the actual patient count
     for size in range(1, len(lambdas) + extra_patients + 1):
@@ -30,7 +31,7 @@ def run_simulation(desired_wait_time, lambdas, show_rates, total_slots, weeks, e
 
 def fetch_patient_data():
     # MongoDB connection details
-    uri = 'mongodb+srv://USERNAME:PASSWORD@cluster0.lxrcibg.mongodb.net/'
+    uri = 'mongodb+srv://{USERNAME}:{PASSWORD}@cluster0.lxrcibg.mongodb.net/'
     client = MongoClient(uri, server_api=ServerApi('1'))
     db = client["healthcare"]
     patients_col = db["patients"]

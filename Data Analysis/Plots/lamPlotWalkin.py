@@ -2,10 +2,11 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
+from credentials import USERNAME, PASSWORD
 
 def fetch_lambda_values():
     # MongoDB connection details - replace with your actual credentials
-    uri = "mongodb+srv://USERNAME:PASSWORD@cluster0.lxrcibg.mongodb.net/"
+    uri = "mongodb+srv://{USERNAME}:{PASSWORD}@cluster0.lxrcibg.mongodb.net/"
     client = MongoClient(uri, server_api=ServerApi('1'))
     
     # Specify the database and collection

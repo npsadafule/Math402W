@@ -1,6 +1,7 @@
 import pandas as pd
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
+from credentials import USERNAME, PASSWORD
 
 # Load the data from Excel
 excel_file_path = 'Appointments.xlsx'
@@ -8,7 +9,14 @@ df = pd.read_excel(excel_file_path, usecols=['PID', 'is_visit', 'ApptTypeDesc'])
 
 # Define a list of ApptTypeDesc to exclude from the show rate calculation
 excluded_appt_types = [
-    "Team 2 Booked", "Case Management", "Phone call from clinician  to client", "Team 1 and Team 2 Booked", "Video", "Team 2 Phone call from clinician to client", "Tobacco Dependency Clinic", "Clinical Chart Time", "Team 1 Phone call from clinician to client", "Virtual Care", "Follow-up", "Home Visit", "External Activity", "myoActivation", "Program Screening", "Team 2 Outreach Visit", "Pap Testing", "Counselling", "iOAT visit", "Team 1 Care Coordination", "Care Coordination", "Video Conferencing", "Interdisciplinary Consult", "Internal Medicine", "OAT Visit - In Office", "Break", "OAT Visit - Outreach", "Letter", "Team 2 Care Coordination", "Specialist", "Social Worker", "OAT Visit - Phone", "Team 1 Outreach Visit", "Bridging Only", "Specimen Collection", "Trans Clinic", "Mental Health Note", "Fibroscan", "Group Visit", "IUC Insertion",
+    "Team 2 Booked", "Case Management", "Phone call from clinician to client", "Team 1 and Team 2 Booked", "Video", 
+    "Team 2 Phone call from clinician to client", "Tobacco Dependency Clinic", "Clinical Chart Time", 
+    "Team 1 Phone call from clinician to client", "Virtual Care", "Follow-up", "Home Visit", "External Activity", 
+    "myoActivation", "Program Screening", "Team 2 Outreach Visit", "Pap Testing", "Counselling",  
+    "Team 1 Care Coordination", "Care Coordination", "Video Conferencing", "Interdisciplinary Consult", 
+    "Internal Medicine", "OAT Visit - In Office", "Break", "OAT Visit - Outreach", "Letter", "Team 2 Care Coordination", 
+    "Specialist", "OAT Visit - Phone", "Team 1 Outreach Visit", "Bridging Only", "Specimen Collection", 
+    "Trans Clinic", "Mental Health Note", "Fibroscan", "Group Visit", "IUC Insertion", "Outreach Visit", "Psychiatrist", "Hep C Visit", "Intake", "Methadone/SUBOXONE", "Methadone Assessment", "Urgent (Same Day Visit)", "New Assessment",  "Addiction Services", "Pharmacy", "Social Worker",
 ]
 
 # Filter out appointments based on ApptTypeDesc
@@ -20,7 +28,7 @@ df_show_rate = df_filtered.groupby('PID')['is_visit'].mean().reset_index()
 df_show_rate.rename(columns={'is_visit': 'ShowRate'}, inplace=True)
 
 # MongoDB connection details
-uri = "mongodb+srv://USERNAME:PASSWORD@cluster0.lxrcibg.mongodb.net/"
+uri = "mongodb+srv://{USERNAME}:{PASSWORD}@cluster0.lxrcibg.mongodb.net/"
 client = MongoClient(uri, server_api=ServerApi('1'))
 
 # Specify the database and collection
