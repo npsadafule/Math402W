@@ -2,6 +2,7 @@ import pandas as pd
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
 from datetime import datetime
+from credentials import USERNAME, PASSWORD
 
 # Load the lambda data from Excel
 lambda_excel_file_path = 'Appointments.xlsx'  # Update this path as necessary
@@ -40,7 +41,7 @@ df_csi_filtered = df_csi[df_csi['PID'].isin(df_lambda_filtered['PID'].unique())]
 avg_csi_scores = df_csi_filtered.groupby('PID')['CSI_Score_0.1'].mean().reset_index(name='CSI')
 
 # MongoDB connection details - replace USERNAME and PASSWORD
-uri = "mongodb+srv://USERNAME:PASSWORD@cluster0.lxrcibg.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+uri = "mongodb+srv://{USERNAME}:{PASSWORD}@cluster0.lxrcibg.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 client = MongoClient(uri, server_api=ServerApi('1'))
 
 # Specify the database and collection

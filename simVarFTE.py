@@ -2,9 +2,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
+from credentials import USERNAME, PASSWORD
 
 # MongoDB connection details
-uri = 'mongodb+srv://npsadafule:zbbc4445@cluster0.lxrcibg.mongodb.net/'
+uri = 'mongodb+srv://{USERNAME}:{PASSWORD}@cluster0.lxrcibg.mongodb.net/'
 client = MongoClient(uri, server_api=ServerApi('1'))
 
 # Database and Collection

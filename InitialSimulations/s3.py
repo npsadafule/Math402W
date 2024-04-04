@@ -2,12 +2,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
+from credentials import USERNAME, PASSWORD
 
 # Desired wait time input from the user
 desired_wait_time = float(input("Enter the desired average wait time (in weeks): "))
 
 # MongoDB connection details
-uri = 'mongodb+srv://USERNAME:PASSWORD@cluster0.lxrcibg.mongodb.net/'
+uri = 'mongodb+srv://{USERNAME}:{PASSWORD}@cluster0.lxrcibg.mongodb.net/'
 client = MongoClient(uri, server_api=ServerApi('1'))
 
 # Database and Collection
