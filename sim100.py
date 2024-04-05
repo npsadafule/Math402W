@@ -31,7 +31,7 @@ def run_simulation(desired_wait_time, lambdas, show_rates, total_slots, weeks, e
 
 def fetch_patient_data():
     # MongoDB connection details
-    uri = 'mongodb+srv://{USERNAME}:{PASSWORD}@cluster0.lxrcibg.mongodb.net/'
+    uri = f'mongodb+srv://{USERNAME}:{PASSWORD}@cluster0.lxrcibg.mongodb.net/'
     client = MongoClient(uri, server_api=ServerApi('1'))
     db = client["healthcare"]
     patients_col = db["patients"]

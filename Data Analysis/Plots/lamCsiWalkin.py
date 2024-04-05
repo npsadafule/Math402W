@@ -7,7 +7,7 @@ from credentials import USERNAME, PASSWORD
 # Function to fetch Lambda and CSI data from MongoDB
 def fetch_lambda_csi_data():
     # MongoDB connection details - replace USERNAME and PASSWORD
-    uri = "mongodb+srv://{USERNAME}:{PASSWORD}@cluster0.lxrcibg.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+    uri = f"mongodb+srv://{USERNAME}:{PASSWORD}@cluster0.lxrcibg.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
     client = MongoClient(uri, server_api=ServerApi('1'))
 
     db = client['healthcare']

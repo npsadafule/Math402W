@@ -5,7 +5,7 @@ from pymongo.server_api import ServerApi
 from credentials import USERNAME, PASSWORD
 
 # MongoDB URI and Client Setup
-uri = 'mongodb+srv://{USERNAME}:{PASSWORD}@cluster0.lxrcibg.mongodb.net/'
+uri = f'mongodb+srv://{USERNAME}:{PASSWORD}@cluster0.lxrcibg.mongodb.net/'
 client = MongoClient(uri, server_api=ServerApi('1'))
 
 # Database and Collection

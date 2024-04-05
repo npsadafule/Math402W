@@ -8,7 +8,7 @@ from credentials import USERNAME, PASSWORD
 desired_wait_time = float(input("Enter the desired average wait time (in weeks): "))
 
 # MongoDB connection details
-uri = 'mongodb+srv://{USERNAME}:{PASSWORD}@cluster0.lxrcibg.mongodb.net/'
+uri = f'mongodb+srv://{USERNAME}:{PASSWORD}@cluster0.lxrcibg.mongodb.net/'
 client = MongoClient(uri, server_api=ServerApi('1'))
 
 # Database and Collection

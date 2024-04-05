@@ -11,7 +11,7 @@ df = pd.read_excel(excel_file_path, usecols=['PID', 'Clinician'])
 grouped = df.groupby('Clinician')['PID'].apply(lambda x: list(set(x))).reset_index(name='Patients')
 
 # MongoDB connection details
-uri = "mongodb+srv://{USERNAME}:{PASSWORD}@cluster0.lxrcibg.mongodb.net/"
+uri = f"mongodb+srv://{USERNAME}:{PASSWORD}@cluster0.lxrcibg.mongodb.net/"
 client = MongoClient(uri, server_api=ServerApi('1'))
 
 # Specify the database and collection

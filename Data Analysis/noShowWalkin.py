@@ -28,7 +28,7 @@ df_show_rate = df_filtered.groupby('PID')['is_visit'].mean().reset_index()
 df_show_rate.rename(columns={'is_visit': 'ShowRate'}, inplace=True)
 
 # MongoDB connection details
-uri = "mongodb+srv://{USERNAME}:{PASSWORD}@cluster0.lxrcibg.mongodb.net/"
+uri = f"mongodb+srv://{USERNAME}:{PASSWORD}@cluster0.lxrcibg.mongodb.net/"
 client = MongoClient(uri, server_api=ServerApi('1'))
 
 # Specify the database and collection

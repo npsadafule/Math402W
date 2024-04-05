@@ -6,7 +6,7 @@ from credentials import USERNAME, PASSWORD
 
 def fetch_show_rates():
     # MongoDB connection details - replace with your actual credentials
-    uri = "mongodb+srv://{USERNAME}:{PASSWORD}@cluster0.lxrcibg.mongodb.net/"
+    uri = f"mongodb+srv://{USERNAME}:{PASSWORD}@cluster0.lxrcibg.mongodb.net/"
     client = MongoClient(uri, server_api=ServerApi('1'))
     
     # Specify the database and collection
